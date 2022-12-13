@@ -49,10 +49,25 @@ def reader_login_auth():
     
     
 
-
-@app.route('/admin_login')
+# NOTE: ADD HTML RENDERING!
+@app.route('/admin/login',methods=["POST"])
 def admin_login():
-    return render_template('admin_login.html')
+    id = request.json.get('Id')
+    name = request.json.get('Name')
+    password =request.json.get("Password")
+    try:
+        command = f'SELECT EXISTS(SELECT * from ADMIN where ADMINID={id} AND ADMIN_NAME="{name}" AND ADMIN_PWD="{password}")'
+        connection.ping()
+        check_data = connection.cursor()
+        check_data.execute(command)
+        doesExists = bool(check_data.fetchall()[0][0])
+        if not doesExists:
+            return "User doesn't exists!"
+        else:
+            return "Valid User!"
+    except Exception as e:
+        print("ERROR!!!",e)
+        return "Server Error",500
 
 @app.route('/admin_login_auth',methods=['GET'])
 def admin_login_auth():
@@ -227,7 +242,7 @@ connection.close()
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(port=8888)
 
 
 
