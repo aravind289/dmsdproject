@@ -25,38 +25,60 @@ tr:nth-child(even) {
 <body>
 
 <h2 align="center">Books Catalog</h2>
+
+<p><b>{{ reader_id }}</b></p><br> 
+
+
 <table>
-
-
-<!-- <tr>
+<tr>
     <td><b><p>DOC ID</p></b></td>
-    <td><b><p>Title</p></b></td>
     <td><b><p>Publisher name</p></b></td>
+    <td><b><p> Title</p></b></td>
+    <td><b><p> Borrow</p></b></td>
+    
+    <td><b><p> Reserve</p></b></td>
+    
+
     
 </tr>
 
-                 {% for obj in total %}
+                 {% for obj in result %}
                 <tr>
                 <td><p>{{ obj[0] }}</p></td>
                 <td><p>{{ obj[1] }}</p></td>
                 <td><p>{{ obj[2] }}</p></td>
-                <td><p>{{ obj[3] }} </p></td>
-                <td><p>{{ obj[4] }}</p></td>
-                <td><p>{{ obj[5] }} </p></td>
+              <td>
+              <a href="/borrowPage/{{obj[0]}}">Borrow</a>
+            </td>
+
+            <td>
+              <a href="/reservePage/{{obj[0]}}">Reserve</a>
+            </td>
                 </tr>
                  {% endfor %}
-</table><br><br> -->
+</table><br><br>
+
+
+
 
 <h2>Login </h2><br><br>
 
-<form id="form_book" action="/admin_login_auth" enctype="multipart/form-data" method="GET">
-    <input type="text" id="id" name="Id" placeholder="Admin Id" >
-    <input type="text" id="pwd" name="Pwd" placeholder="Password">   
+<form id="form_book" action="/reader_menu" enctype="multipart/form-data" method="GET">
+  <label for="search_type">Choose search type</label>
 
-    <button type="submit" >Submit</button><br><br>
+  <select name="search_type" id="search_type">
+    <option value="Id">Id</option>
+    <option value="Title">Title</option>
+    <option value="Publisher_name">Publisher name</option>
+  </select>
+
+
+  <input type="text" name="SearchType" id="searchTypeText" required>
+  <button type="submit" id="SearchTypeButton">Submit</button>
 </form>
 
-<p><b>{{ result }}</b></p><br> 
+
+<br> 
 
 <!-- <form id="borrow_book" action="/borrow_this_book" enctype="multipart/form-data" method="post">
     Library Staff SSN:<br>
