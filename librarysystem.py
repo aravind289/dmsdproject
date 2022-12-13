@@ -6,7 +6,7 @@ from flask_session import Session
 
 # connection = pymysql.connect(host="mysql01.arcs.njit.edu",port=3306,user="ak2855", password="Sampletest123%%", database="ak2855")
 
-connection = pymysql.connect(host="127.0.0.1",port=3306,user="root", password="Test123%%", database="libdata")
+connection = pymysql.connect(host="127.0.0.1",port=3306,user="root", password="", database="libdata")
 print("Database connected...")
 
 app = Flask(__name__)
@@ -48,6 +48,9 @@ def reader_login_auth():
         return render_template('reader_login.html', result="reader details not present")
     
     
+'''
+Contains Admin Handlers
+'''
 
 # NOTE: ADD HTML RENDERING!
 @app.route('/admin/login',methods=["POST"])
@@ -66,6 +69,81 @@ def admin_login():
         else:
             return "Valid User!"
     except Exception as e:
+        print("ERROR!!!",e)
+        return "Server Error",500
+
+# NOTE: ADD HTML RENDERING!
+@app.route('/admin/create',methods=["POST"])
+def create_admin():
+    id = request.json.get('Id')
+    name = request.json.get('Name')
+    password =request.json.get("Password")
+    try:
+        command = f'INSERT INTO ADMIN (ADMINID, ADMIN_NAME, ADMIN_PWD) VALUES ({id},"{name}","{password}")'
+        connection.ping()
+        check_data = connection.cursor()
+        check_data.execute(command)
+        connection.commit()
+        created = check_data.fetchall()
+        if len(created)==0:
+            return "Successfully created!"
+    except Exception as e:
+        if type(e)==pymysql.err.IntegrityError:
+            code, message = e.args
+            return f"{message}",400
+        print("ERROR!!!",e)
+        return "Server Error",500
+
+'''
+Document Handlers
+'''
+# NOTE: ADD HTML RENDERING!
+@app.route('/admin/document/upload',methods=["POST"])
+def upload_document():
+    docid= request.json.get('docid')
+    title = request.json.get('title')
+    pdate = request.json.get('pdate')
+    pubid =request.json.get("publisherid")
+    copies=request.json.get("copies")
+    
+    try:
+        command = f'INSERT INTO DOCUMENT (DOCID, TITLE, PDATE, PUBLISHERID, NumberOfCopies) VALUES ({docid},"{title}","{pdate}","{pubid}",{copies})'
+        connection.ping()
+        check_data = connection.cursor()
+        check_data.execute(command)
+        connection.commit()
+        created = check_data.fetchall()
+        if len(created)==0:
+            return "Successfully created!"
+    except Exception as e:
+        if type(e)==pymysql.err.OperationalError or type(e)==pymysql.err.IntegrityError or type(e)==pymysql.err.DataError:
+            code, message = e.args
+            return f"{message}",400
+        print("ERROR!!!",e)
+        return "Server Error",500
+
+# NOTE: ADD HTML RENDERING!
+@app.route('/admin/document/search',methods=["POST"])
+def search_document():
+    title = request.json.get('title')
+    try:
+        command = f'SELECT * FROM DOCUMENT WHERE TITLE="{title}"'
+        connection.ping()
+        check_data = connection.cursor()
+        check_data.execute(command)
+        entries = check_data.fetchall()
+        matching_document=[]
+        print(len(entries))
+        print(entries)
+        if len(entries)>0:
+            for document in entries:
+                print(document)
+                matching_document.append([{"DocId":document[0],"Document-Name":document[1],"Published-Date":document[2],"Publisher-Id":document[3],"Number of copies left":document[4]}])
+        return matching_document
+    except Exception as e:
+        if type(e)==pymysql.err.OperationalError or type(e)==pymysql.err.IntegrityError or type(e)==pymysql.err.DataError:
+            code, message = e.args
+            return f"{message}",400
         print("ERROR!!!",e)
         return "Server Error",500
 
