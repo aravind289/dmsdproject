@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Member</title>
+</head>
+<body>
+
+<h2 align="center">Add a new Member</h2><br><br>
+
+<h3>Enter the details:</h3><br><br>
+<form id="new_member" action="/admin/add_reader" enctype="multipart/form-data" method="POST">
+    Reader Name<br>
+    <input type="text" name="Name" required><br>
+
+    Reader Address<br>
+    <input type="text" name="Addr" required><br>
+
+    Phone Number<br>
+    <input type="text" name="Phno" required><br>
+
+    <label for="reader_type">Choose reader Type</label>
+
+  <select name="reader_type" id="reader_type">
+    <option value="Student">Student</option>
+    <option value="Staff">Staff</option>
+    <option value="SeniorCitizen">Senior Citizen</option>
+  </select>
+
+    <button type="submit" id="addmem_button">Submit</button>
+
+
+</form>
+
+<p>{{ result }}</p>
+</body>
+</html>

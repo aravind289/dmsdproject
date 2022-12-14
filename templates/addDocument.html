@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New Document</title>
+</head>
+<body>
+
+<h2 align="center">Add A new Document</h2><br><br>
+
+<h3>Enter the details:</h3><br><br>
+<form id="new_member" action="/admin/document/upload" enctype="multipart/form-data" method="POST">
+
+    Title<br>
+    <input type="text" name="title" required><br>
+
+    Publishing date<br>
+    <input type="date" name="pdate" required><br>
+
+    Publisher Id<br>
+    <input type="text" name="publisherid" required><br>
+
+    Number Of Copies<br>
+    <input type="text" name="noOfcopies"><br>
+
+    <button type="submit" id="addDoc">Submit</button>
+
+
+</form>
+
+<p>{{ result }}</p>
+</body>
+</html>

@@ -25,54 +25,213 @@ tr:nth-child(even) {
 <body>
 
 <h2 align="center">Admin Menu</h2>
+
+<p><b>{{ result }}</b></p><br> 
+
 <table>
-
-
-<!-- <tr>
-    <td><b><p>DOC ID</p></b></td>
-    <td><b><p>Title</p></b></td>
-    <td><b><p>Publisher name</p></b></td>
+ <tr>
+    <td><b><p>BRANCH NAME</p></b></td>
+    <td><b><p>BRANCH LOCATION</p></b></td>
+    <td><b><p>BRANCH ID</p></b></td>
     
 </tr>
 
-                 {% for obj in total %}
+                 {% for obj in finalOutput %}
                 <tr>
                 <td><p>{{ obj[0] }}</p></td>
                 <td><p>{{ obj[1] }}</p></td>
                 <td><p>{{ obj[2] }}</p></td>
-                <td><p>{{ obj[3] }} </p></td>
-                <td><p>{{ obj[4] }}</p></td>
-                <td><p>{{ obj[5] }} </p></td>
                 </tr>
                  {% endfor %}
-</table><br><br> -->
+</table><br><br> 
 
-<h2>Login </h2><br><br>
 
-<!-- <form id="form_book" action="/admin_login_auth" enctype="multipart/form-data" method="GET">
-    <input type="text" id="id" name="Id" placeholder="Admin Id" >
-    <input type="text" id="pwd" name="Pwd" placeholder="Password">   
+<!-- add document -->
+<form id="form_add_doc" action="/add_reader" enctype="multipart/form-data" >
+    <button type="submit" >ADD READER</button><br><br>
+</form> 
 
-    <button type="submit" >Submit</button><br><br>
-</form> -->
+<!-- add reader -->
+<form id="form_add_reader" action="/add_document" enctype="multipart/form-data">
+  <button type="submit" >ADD DOCUMENT</button><br><br>
+</form> 
 
-<p><b>{{ result }}</b></p><br> 
+<!-- SEARCH DOCUMENT COPY AND CHECK STATUS -->
+<form id="form_check_status" action="/documentCopyStatus" enctype="multipart/form-data" method="GET">
+  <input type="text" name ="docId" id="docId" placeholder="document id" required>
+  <input type="text" name ="copyNo" id="copyNo" placeholder="copy No" required>
+  <button type="submit" >Submit</button><br><br>
+</form> 
 
-<!-- <form id="borrow_book" action="/borrow_this_book" enctype="multipart/form-data" method="post">
-    Library Staff SSN:<br>
-    <input type="number" name="Lib_SSN" required><br>
 
-    Book ISBN:<br>
-    <input type="number" name="book_ISBN" required><br>
+<!-- number n branch i top N most frequent 
+borrowers (Rid and name)  -->
+<form id="form_question_1" action="/question1" enctype="multipart/form-data" method="GET">
+  <label> Get number N and branch number I as input and print the top N most frequent 
+    borrowers (Rid and name) in branch I and the number of books each has borrowed. </label><br>
+  <input type="text" name ="RandN" id="randN" placeholder="Random Number" required>
+  <input type="text" name ="BranchI" id="branchI" placeholder="Random branch " required>
+  <button type="submit" >Submit</button><br><br>
+</form> 
 
-    Member SSN:<br>
-    <input type="number" name="mem_SSN" required><br><br>
 
-    <button type="submit" id="borrowbutton">Submit</button>
+<table>
+  <tr>
+     <td><b><p>Reader Id </p></b></td>
+     <td><b><p>Reader name</p></b></td>
+     <td><b><p>Number Of Books Borrowed</p></b></td>
+     
+ </tr>
+ 
+                  {% for obj in output1 %}
+                 <tr>
+                 <td><p>{{ obj[0] }}</p></td>
+                 <td><p>{{ obj[1] }}</p></td>
+                 <td><p>{{ obj[2] }}</p></td>
+                 </tr>
+                  {% endfor %}
+ </table><br><br> 
 
-</form>
 
-<p><b>{{ result }}</b></p><br> -->
+<!-- Get number N as input and print the top N most frequent borrowers (Rid and name) 
+in the library and the number of books each has borrowed. -->
+<form id="form_question_2" action="/question2" enctype="multipart/form-data" method="GET">
+  <label>Get number N as input and print the top N most frequent borrowers (Rid and name) 
+    in the library and the number of books each has borrowed. </label> <br>
+  <input type="text" name ="RandN" id="randN" placeholder="Random Number" required>
+  <button type="submit" >Submit</button><br><br>
+</form> 
+
+
+<table>
+  <tr>
+     <td><b><p>Reader Id </p></b></td>
+     <td><b><p>Reader name</p></b></td>
+     <td><b><p>Number Of Books Borrowed</p></b></td>
+     
+ </tr>
+ 
+                  {% for obj in output2 %}
+                 <tr>
+                 <td><p>{{ obj[0] }}</p></td>
+                 <td><p>{{ obj[1] }}</p></td>
+                 <td><p>{{ obj[2] }}</p></td>
+                 </tr>
+                  {% endfor %}
+ </table><br><br> 
+
+
+<!-- Get number N and branch number I as input and print the N most borrowed books 
+in branch I -->
+<form id="form_question_3" action="/question3" enctype="multipart/form-data" method="GET">
+  <label>
+    Get number N and branch number I as input and print the N most borrowed books 
+in branch I. 
+  </label><br>
+  <input type="text" name ="RandN" id="randN" placeholder="Random Number" required>
+  <input type="text" name ="BranchI" id="branchI" placeholder="Random branch " required>
+  <button type="submit" >Submit</button><br><br>
+</form> 
+
+<table>
+  <tr>
+     <td><b><p>Document Id </p></b></td>
+     <td><b><p>Document Title </p></b></td>
+     <td><b><p>Number Of Books Borrowed</p></b></td>
+     
+ </tr>
+ 
+                  {% for obj in output3 %}
+                 <tr>
+                 <td><p>{{ obj[0] }}</p></td>
+                 <td><p>{{ obj[1] }}</p></td>
+                 <td><p>{{ obj[2] }}</p></td>
+                 </tr>
+                  {% endfor %}
+ </table><br><br> 
+
+
+
+
+<!-- Get number N as input and print the N most borrowed books in the library. -->
+<form id="form_question_4" action="/question4" enctype="multipart/form-data" method="GET">
+  <label>
+    Get number N as input and print the N most borrowed books in the library. 
+  </label>
+  <input type="text" name ="RandN" id="randN" placeholder="Random Number" required>
+  <button type="submit" >Submit</button><br><br>
+</form> 
+
+
+<table>
+  <tr>
+     <td><b><p>Document Id </p></b></td>
+     <td><b><p>Document Title </p></b></td>
+     <td><b><p>Number Of Books Borrowed</p></b></td>
+     
+ </tr>
+ 
+                  {% for obj in output4 %}
+                 <tr>
+                 <td><p>{{ obj[0] }}</p></td>
+                 <td><p>{{ obj[1] }}</p></td>
+                 <td><p>{{ obj[2] }}</p></td>
+                 </tr>
+                  {% endfor %}
+ </table><br><br> 
+
+<!-- Get a year as input and print the 10 most popular books of that year in the library. -->
+<form id="form_question_5" action="/question5" enctype="multipart/form-data" method="GET">
+  <label>
+    Get a year as input and print the 10 most popular books of that year in the library.
+  </label><br>
+  <input type="date" name ="yearInput" id="YearInput"  required>
+  <button type="submit" >Submit</button><br><br>
+</form> 
+
+<table>
+  <tr>
+     <td><b><p>Document Id </p></b></td>
+     <td><b><p>Document Title </p></b></td>
+ </tr>
+ 
+                  {% for obj in output5 %}
+                 <tr>
+                 <td><p>{{ obj[0] }}</p></td>
+                 <td><p>{{ obj[1] }}</p></td>
+                 </tr>
+                  {% endfor %}
+ </table><br><br> 
+
+
+<!-- Get a start date S and an end date E as input and print, for each branch, the branch 
+Id and name and the average fine paid by the borrowers for documents borrowed 
+from this branch during the corresponding period of time.  -->
+<form id="form_question_6" action="/question6" enctype="multipart/form-data" method="GET">
+  <label>
+    Get a start date S and an end date E as input and print, for each branch, the branch 
+Id and name and the average fine paid by the borrowers for documents borrowed 
+from this branch during the corresponding period of time. 
+  </label><br>
+  <input type="date" name ="startdate" id="StartDate"  required>
+  <input type="date" name ="endDate" id="EndDate" required>
+  <button type="submit" >Submit</button><br><br>
+</form> 
+
+
+<table>
+  <tr>
+     <td><b><p>Document Id </p></b></td>
+     <td><b><p>Document Title </p></b></td>
+ </tr>
+ 
+                  {% for obj in output5 %}
+                 <tr>
+                 <td><p>{{ obj[0] }}</p></td>
+                 <td><p>{{ obj[1] }}</p></td>
+                 </tr>
+                  {% endfor %}
+ </table><br><br> 
 
 
 </body>

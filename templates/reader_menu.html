@@ -32,8 +32,11 @@ tr:nth-child(even) {
 <table>
 <tr>
     <td><b><p>DOC ID</p></b></td>
-    <td><b><p>Publisher name</p></b></td>
     <td><b><p> Title</p></b></td>
+    <td><b><p> Copy No</p></b></td>
+    <td><b><p>Publisher name</p></b></td>
+    <td><b><p>Branch Id</p></b></td>
+
     <td><b><p> Borrow</p></b></td>
     
     <td><b><p> Reserve</p></b></td>
@@ -47,12 +50,14 @@ tr:nth-child(even) {
                 <td><p>{{ obj[0] }}</p></td>
                 <td><p>{{ obj[1] }}</p></td>
                 <td><p>{{ obj[2] }}</p></td>
+                <td><p>{{ obj[3] }}</p></td>
+                <td><p>{{ obj[4] }}</p></td>
               <td>
-              <a href="/borrowPage/{{obj[0]}}">Borrow</a>
+              <a href="/borrowPage/{{obj[0]}}/{{obj[2]}}/{{obj[4]}}">Borrow</a>
             </td>
 
             <td>
-              <a href="/reservePage/{{obj[0]}}">Reserve</a>
+              <a href="/reservePage/{{obj[0]}}/{{obj[2]}}/{{obj[4]}}">Reserve</a>
             </td>
                 </tr>
                  {% endfor %}
@@ -94,7 +99,39 @@ tr:nth-child(even) {
 
 </form>
 
-<p><b>{{ result }}</b></p><br> -->
+ -->
+
+ <table>
+  <tr>
+
+      <td><b><p> DOC ID </p></b></td>   
+      <td><b><p>TITLE  </p></b></td> 
+      <td><b><p>BID  </p></b></td>
+      <td><b><p>COPY NO  </p></b></td>
+
+  
+      
+  </tr>
+  
+                   {% for obj in books_result %}
+                  <tr>
+                  <td><p>{{ obj[0] }}</p></td>
+                  <td><p>{{ obj[1] }}</p></td>
+                  <td><p>{{ obj[2] }}</p></td>
+                  <td><p>{{ obj[3] }}</p></td>
+                  <td>
+                    <a href="/returnBook/{{obj[0]}}/{{obj[2]}}/{{obj[3]}}">Return</a>
+                  </td>
+                  </tr>
+                   {% endfor %}
+  </table><br><br>
+
+ <p><b>{{ successMsg }}</b></p><br>
+ <p><b>{{ successreturnMsg }}</b></p><br>
+
+ <p><b>{{ fineAmount }}</b></p><br>
+
+ <p><b>{{ failureMsg }}</b></p><br>
 
 
 </body>
